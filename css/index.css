@@ -1,0 +1,165 @@
+body, html{
+    margin: 0px;
+    padding: 0px;
+    font-family: sans-serif;
+    background-color: black;
+    color: antiquewhite;
+    overflow-x: hidden;
+    user-select: none;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+#top{
+    border-radius: 10px;
+    width: 90vw;
+    margin: 10px auto 20px auto;
+    padding-top: 20px;
+    background-color: rgb(12, 18, 43);
+    transition: all 400ms;
+}
+
+#search{
+    display: block;
+    position: absolute;
+    right: 2vw;
+    top: 2vh;
+    background-color: rgba(255, 255, 255, 0.623);
+    border-radius: 50%;
+    border: none;
+    margin-left: auto;
+    margin-right: 10px;
+    width: 40px;
+    height: 40px;
+    outline: none;
+    transition: all 400ms;
+}
+#search:hover{
+    background-color: white;
+}
+
+#temp{
+    padding-left: 20px;
+    font-size: 6rem;
+    font-weight: 700;
+}
+
+#weather{
+    padding: 10px 0px 10px 20px;
+    font-size: 30px;
+    font-weight: 300;
+}
+
+#place{
+    padding: 10px 0px 10px 20px;
+    font-size: 1em;
+    font-weight: 300;
+}
+
+#extras{
+    padding: 2vh 2vw 2vh 2vw;
+    border-radius: 10px;
+    width: 86vw;
+    background-color: rgb(12, 18, 43);
+    display: none;
+    margin: auto;
+    transition: all 400ms;
+}
+
+.day{
+    margin: 0px;
+    padding: 0px;
+    width: 86vw;
+    height: auto;
+    margin: 4vh auto 2vh auto;
+    transition: all 400ms;
+    background-color: rgb(12, 18, 43);
+    padding: 0px;
+}
+
+.fiveday{
+    width: 100%;
+    height: auto;
+    margin: 0px;
+    background-color: royalblue;
+    transition: all 400ms;
+    padding: 0px;
+    display: flex;
+    overflow-x: scroll;
+}
+
+.date{
+    width: 100%;
+    padding: 10px 20px;
+
+}
+
+.hours{
+    height: 100%;
+    padding: 0px 40px 0px 40px;
+    text-align: center;
+    border-right: 1px solid black; 
+    display: flex;
+    flex-direction: column;
+}
+
+.wtitle{
+    width: 100%;
+    height: 40px;
+    font-size: 30px;
+    line-height: 40px;
+    flex: 0 0 auto;
+}
+
+.icon{
+    display: block;
+    width: 100%;
+    height: 150px;
+    font-size: 90px;
+    flex: 1 1 auto;
+}
+
+.time{
+    width: inherit;
+    height: 40px;
+    margin: 0px;
+    flex: 0 1 auto;
+}
+
+.container{
+    display: flex;
+}
+
+.container div{
+    width: 50%;
+    margin: 10px 0 10px 0;
+}
+
+.end{
+    padding-right: 10px;
+    text-align: end;
+}
+
+#rain-c{
+    display: none;
+}
+
+#windimg{
+    font-size: 25px;
+}
+
+.fiveday::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+.fiveday::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0); 
+}
+.fiveday::-webkit-scrollbar-thumb {
+    background: rgb(39, 38, 38); 
+    border-radius: 12px;
+}
+.fiveday::-webkit-scrollbar-thumb:hover {
+    background: rgb(20, 20, 20); 
+    border-radius: 12px;
+}
