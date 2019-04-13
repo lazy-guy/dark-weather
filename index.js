@@ -1,6 +1,7 @@
 var apikey = "2aca00e2d1ef80c8d993467bb7c58e83";
 var unit = "metric";
 var last;
+var lastTime;
 var lastforecast;
 var todaytemp = [];
 var city;
@@ -28,7 +29,7 @@ if (localStorage.getItem("city")) {
 function req(place) {
     date = new Date();
     utcTime = parseInt(date.getTime() / 1000);
-    if (typeof last !== "undefined" && last.name.toUpperCase() == place.toUpperCase() && utcTime - last.dt < 1200) {
+    if (typeof place === "string" && typeof last !== "undefined" && last.name.toUpperCase() == place.toUpperCase() && utcTime - last.dt < 1200) {
         init(last);
     } else {
         fetch(`https://api.openweathermap.org/data/2.5/weather?q=${place}&units=${unit}&APPID=${apikey}`).then(function (result) {
@@ -54,40 +55,57 @@ function req(place) {
 }
 
 function forecast(fore) {
+    var tempdate;
     if (fore.cod === "404") {
         return;
     }else
     for (var i = 0; i < 5; i++) {
+        tempdate = new Date(fore.list[i].dt*1000);
+        if(tempdate.getDate() === lastTime.getDate()){
         todaytemp.push(fore.list[i].main.temp);
+        }
     }
     maxtemp = Math.max.apply(Math, todaytemp);
     mintemp = Math.min.apply(Math, todaytemp);
     document.querySelector("#minmaxtext").innerText = "Max/Min";
     document.querySelector("#minmax").innerHTML = parseInt(maxtemp) + "&deg;C/" + parseInt(mintemp) + "&deg;C";
     var temphtml = "";
-    var tempdate = Date.parse(fore.list[0].dt_txt);
-    tempdate = new Date(tempdate);
+    tempdate = new Date(fore.list[0].dt*1000);
     var basedate = tempdate.getDate();
     var basenum = 1;
     var foredate;
     var foremonth;
     for (let i = 0; i < fore.list.length; i++) {
-        tempdate = Date.parse(fore.list[i].dt_txt);
-        tempdate = new Date(tempdate);
-        if(tempdate.getDate() === basedate){
+        tempdate = new Date(fore.list[i].dt*1000);
+        if(tempdate.getDate() == basedate){
             temphtml += `<div class="hours">
-        <div class="wtitle">${fore.list[i].weather[0].main}</div>
+        <div class="wtitle">${fore.list[i].weather[0].main}&nbsp;${fore.list[i].main.temp.toFixed(0)}&deg;</div>
         <i class="icon wi wi-owm-${fore.list[i].weather[0].id}"></i>
         <div class="time">${tempdate.getHours()}:00</div>
         </div>`;
         }else{
-            foredate = tempdate.getDate() - 1;
+            basedate = tempdate.getDate();
+            tempdate = new Date(fore.list[i - 1].dt*1000);
+            foredate = tempdate.getDate();
             foremonth = tempdate.getMonth() + 1;
+            if(typeof document.querySelector("#d"+basenum) === "object"){
             document.querySelector("#d"+basenum).innerText = foremonth + "/" + foredate;
             document.querySelector("#day"+basenum).innerHTML = temphtml;
             temphtml = "";
             basenum++;
+            }
+        }
+        if(i === fore.list.length - 1){
             basedate = tempdate.getDate();
+            tempdate = new Date(fore.list[i - 1].dt*1000);
+            foredate = tempdate.getDate();
+            foremonth = tempdate.getMonth() + 1;
+            if(document.querySelector("#d"+basenum)){
+            document.querySelector("#d"+basenum).innerText = foremonth + "/" + foredate;
+            document.querySelector("#day"+basenum).innerHTML = temphtml;
+            temphtml = "";
+            basenum++;
+            }
         }
     }
 }
@@ -101,12 +119,10 @@ function init(res) {
         alert("City not found!");
         return;
     } else {
-        if (typeof city === "undefined") {
-            city = res.name;
-            localStorage.setItem("city", city);
-        }
+        city = res.name;
+        localStorage.setItem("city", city);
         document.querySelector("#extras").style.display = "block";
-        document.querySelector("#temp").innerHTML = parseInt(res.main.temp) + "&deg;C";
+        document.querySelector("#temp").innerHTML = res.main.temp.toFixed(0) + "&deg;C";
         document.querySelector("#weather").innerHTML = res.weather[0].main + '&nbsp;&nbsp;&nbsp;<i id="wimg"></i>';
         document.querySelector("#wimg").className = "wi wi-owm-" + res.weather[0].id;
         document.querySelector("#place").innerText = res.name;
@@ -207,6 +223,7 @@ function init(res) {
         console.log();
         last = res;
         localStorage.setItem("last", JSON.stringify(last));
+        lastTime = new Date(last.dt*1000);
     }
 }
 
