@@ -55,7 +55,6 @@ function req(place) {
 
 function forecast(fore) {
     if (fore.cod === "404") {
-        alert("City not found!");
         return;
     }else
     for (var i = 0; i < 5; i++) {
