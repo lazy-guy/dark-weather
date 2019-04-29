@@ -1,7 +1,7 @@
 {
     "background_color": "black",
     "description": "Dark-themed weather app. Based on OpenWeatherMap API",
-    "display": "fullscreen",
+    "display": "standalone",
     "icons": [
       {
         "src": "img/android/icon.png",
@@ -10,7 +10,9 @@
       }
     ],
     "name": "Dark Weather",
+    "lang": "en-US",
+    "scope": "/",
     "short_name": "Weather",
     "start_url": "/index.html",
-    "theme_color": "rgb(12, 18, 43)"
+    "theme_color": "#111111"
   }

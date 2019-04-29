@@ -9,7 +9,7 @@ var utcTime;
 var mintemp;
 var maxtemp;
 var ishome = false;
-var s_href = "http://127.0.0.1:5500/index.html";
+var s_href = "https://simply-js.github.io/dark-weather/index.html";
 if (localStorage.getItem("last")) {
     last = JSON.parse(localStorage.getItem("last"));
 }else {
