@@ -159,7 +159,7 @@ function search() {
 }
 
 function aftersearch(id){
-    location.hash = "#";
+    history.back();
     setTimeout(function(){document.getElementById("finalists").innerHTML = "";document.getElementById("cityquery").value = ""}, 1000)
     req(id);
 }

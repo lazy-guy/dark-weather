@@ -8,7 +8,8 @@ self.addEventListener('install', function (e) {
         '/dark-weather/css/index.css',
         '/dark-weather/css/weather-icons-wind.min.css',
         '/dark-weather/css/weather-icons.min.css',
-        '/dark-weather/font/weathericons-regular-webfont.woff2'
+        '/dark-weather/font/weathericons-regular-webfont.woff2',
+		'/dark-weather/city.list.min.json'
       ]);
     })
   );
