@@ -17,10 +17,10 @@
 <body>
     <div id="top">
         <div class="container">
-            <div id="place">?</div>
+            <div id="place">Loading...</div>
             <button id="search" onclick="search()">&#128270;</button>
         </div>
-        <div id="temp">?</div>
+        <div id="temp">...</div>
         <div id="weather"><i id="wimg"></i></div>
     </div>
     <div id="extras">
@@ -78,6 +78,12 @@
         <div class="date" id="d5"></div>
         <div class="fiveday" id="day5">
         </div>
+    </div>
+    <div id="citylist">
+        <button id="closesearch" onclick="history.back()">&times;</button>
+        <label for="cityquery"><h3>Enter City Name:-</h3></label>
+        <input type="text" id="cityquery" oninput="cities()">
+        <div id="finalists"></div>
     </div>
     <script src="index.js"></script>
     <script>
