@@ -8,11 +8,23 @@ var date;
 var utcTime;
 var mintemp;
 var maxtemp;
+var ishome = false;
+var s_href = "http://127.0.0.1:5500/index.html";
 if (localStorage.getItem("last")) {
     last = JSON.parse(localStorage.getItem("last"));
+}else {
+    last = {
+        id:"9090909090"
+    }
 }
 if (localStorage.getItem("lastforecast")) {
     lastforecast = JSON.parse(localStorage.getItem("lastforecast"));
+}else {
+    lastforecast = {
+        city: {
+            id: "9090909090"
+        }
+    }
 }
 if (localStorage.getItem("city")) {
     city = localStorage.getItem("city");
@@ -77,19 +89,15 @@ function req(place) {
         fetch(`https://api.openweathermap.org/data/2.5/weather?id=${place}&units=${unit}&APPID=${apikey}`).then(function (result) {
             return result.json()
         }).then(function (res) {
-            console.log(res);
             init(res);
         });
     }
-    if (typeof lastforecast !== "undefined" && lastforecast.cod !== "404") {
-        if (lastforecast.city.id == place && utcTime - last.dt < 3600) {
+    if (typeof lastforecast !== "undefined" && lastforecast.city.id == place && lastforecast.cod !== "404" && utcTime - last.dt < 3600) {
             forecast(lastforecast);
-        }
     } else {
         fetch(`https://api.openweathermap.org/data/2.5/forecast?id=${place}&units=${unit}&APPID=${apikey}`).then(function (result) {
             return result.json()
         }).then(function (fore) {
-            console.log(fore);
             lastforecast = fore;
             localStorage.setItem("lastforecast", JSON.stringify(lastforecast));
             forecast(fore);
@@ -109,6 +117,7 @@ function forecast(fore) {
                 todaytemp.push(fore.list[i].main.temp);
             }
         }
+        todaytemp.push(last.main.temp.toFixed(0));
         maxtemp = Math.max.apply(Math, todaytemp);
         mintemp = Math.min.apply(Math, todaytemp);
         document.querySelector("#minmaxtext").innerText = "Max/Min";
@@ -156,16 +165,39 @@ function forecast(fore) {
 }
 
 function search() {
-    location.hash = "#citylist";
+    if(window.location.hash !== "#citylist" && ishome === false){
+    window.history.pushState("City", "City", s_href + "#citylist");
+    ishome = true;
+    }else {
+        window.history.replaceState("City", "City", s_href + "#citylist");
+    }
+    document.getElementById("citylist").style.top = "0";
+    document.getElementById("main").style.overflowY = "hidden";
 }
 
 function aftersearch(id) {
-    history.back();
+    if(window.location.hash !== "#main"){
+    window.history.replaceState("Main", "main", s_href + "#main");
+    }
+    document.getElementById("citylist").style.top = "110vh";
+    document.getElementById("main").style.overflowY = "auto";
     setTimeout(function () {
         document.getElementById("finalists").innerHTML = "";
         document.getElementById("cityquery").value = ""
     }, 1000)
     req(id);
+}
+
+function closesearch(){
+    if(window.location.hash !== "#main"){
+        window.history.replaceState("Main", "main", s_href + "#main");
+        }
+    document.getElementById("citylist").style.top = "110vh";
+    document.getElementById("main").style.overflow = "auto";
+    setTimeout(function () {
+        document.getElementById("finalists").innerHTML = "";
+        document.getElementById("cityquery").value = ""
+    }, 1000)
 }
 
 function init(res) {
@@ -275,7 +307,6 @@ function init(res) {
             document.querySelector("#sunset-c").style.display = "none";
             document.querySelector("#sunset").innerHTML = "";
         }
-        console.log();
         last = res;
         localStorage.setItem("last", JSON.stringify(last));
         lastTime = new Date(last.dt * 1000);
@@ -283,3 +314,11 @@ function init(res) {
 }
 
 fetchjson();
+
+window.addEventListener("popstate", function(){
+    if(window.location.hash == "#citylist"){
+        search();
+    }else {
+        closesearch();
+    }
+})

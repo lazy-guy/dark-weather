@@ -15,6 +15,7 @@
 </head>
 
 <body>
+    <main id="main">
     <div id="top">
         <div class="container">
             <div id="place">Loading...</div>
@@ -79,8 +80,9 @@
         <div class="fiveday" id="day5">
         </div>
     </div>
+    </main>
     <div id="citylist">
-        <button id="closesearch" onclick="history.back()">&times;</button>
+        <button id="closesearch" onclick="closesearch()">&times;</button>
         <label for="cityquery"><h3>Enter City Name:-</h3></label>
         <input type="text" id="cityquery" oninput="cities()">
         <div id="finalists"></div>
