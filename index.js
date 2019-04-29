@@ -3,7 +3,6 @@ var unit = "metric";
 var last;
 var lastTime;
 var lastforecast;
-var todaytemp = [];
 var city;
 var date;
 var utcTime;
@@ -35,7 +34,7 @@ async function fetchjson() {
 
 function cities() {
     if (citylist) {
-        if(document.getElementById("cityquery").value.length == 0){
+        if (document.getElementById("cityquery").value.length == 0) {
             document.getElementById("finalists").innerHTML = "";
             return;
         }
@@ -54,9 +53,9 @@ function cities() {
             var obj = finale[i];
             cityhtml += `<div class="card" onclick="aftersearch(${obj.id})"> ${obj.name}, ${obj.country.toUpperCase()}<br />Lat = ${obj.coord.lat} , Long = ${obj.coord.lon}</div>`
         }
-        if(cityhtml !== " "){
-        document.getElementById("finalists").innerHTML = cityhtml;
-        }else{
+        if (cityhtml !== " ") {
+            document.getElementById("finalists").innerHTML = cityhtml;
+        } else {
             document.getElementById("finalists").innerHTML = "<h4>No city found!</h4>";
         }
     }
@@ -102,53 +101,55 @@ function forecast(fore) {
     var tempdate;
     if (fore.cod === "404") {
         return;
-    } else
+    } else {
+        var todaytemp = [];
         for (var i = 0; i < 5; i++) {
             tempdate = new Date(fore.list[i].dt * 1000);
             if (tempdate.getDate() === lastTime.getDate()) {
                 todaytemp.push(fore.list[i].main.temp);
             }
         }
-    maxtemp = Math.max.apply(Math, todaytemp);
-    mintemp = Math.min.apply(Math, todaytemp);
-    document.querySelector("#minmaxtext").innerText = "Max/Min";
-    document.querySelector("#minmax").innerHTML = parseInt(maxtemp) + "&deg;C/" + parseInt(mintemp) + "&deg;C";
-    var temphtml = "";
-    tempdate = new Date(fore.list[0].dt * 1000);
-    var basedate = tempdate.getDate();
-    var basenum = 1;
-    var foredate;
-    var foremonth;
-    for (let i = 0; i < fore.list.length; i++) {
-        tempdate = new Date(fore.list[i].dt * 1000);
-        if (tempdate.getDate() == basedate) {
-            temphtml += `<div class="hours">
+        maxtemp = Math.max.apply(Math, todaytemp);
+        mintemp = Math.min.apply(Math, todaytemp);
+        document.querySelector("#minmaxtext").innerText = "Max/Min";
+        document.querySelector("#minmax").innerHTML = parseInt(maxtemp) + "&deg;C/" + parseInt(mintemp) + "&deg;C";
+        var temphtml = "";
+        tempdate = new Date(fore.list[0].dt * 1000);
+        var basedate = tempdate.getDate();
+        var basenum = 1;
+        var foredate;
+        var foremonth;
+        for (let i = 0; i < fore.list.length; i++) {
+            tempdate = new Date(fore.list[i].dt * 1000);
+            if (tempdate.getDate() == basedate) {
+                temphtml += `<div class="hours">
         <div class="wtitle">${fore.list[i].weather[0].main}&nbsp;${fore.list[i].main.temp.toFixed(0)}&deg;</div>
         <i class="icon wi wi-owm-${fore.list[i].weather[0].id}"></i>
         <div class="time">${tempdate.getHours()}:00</div>
         </div>`;
-        } else {
-            basedate = tempdate.getDate();
-            tempdate = new Date(fore.list[i - 1].dt * 1000);
-            foredate = tempdate.getDate();
-            foremonth = tempdate.getMonth() + 1;
-            if (typeof document.querySelector("#d" + basenum) === "object") {
-                document.querySelector("#d" + basenum).innerText = foremonth + "/" + foredate;
-                document.querySelector("#day" + basenum).innerHTML = temphtml;
-                temphtml = "";
-                basenum++;
+            } else {
+                basedate = tempdate.getDate();
+                tempdate = new Date(fore.list[i - 1].dt * 1000);
+                foredate = tempdate.getDate();
+                foremonth = tempdate.getMonth() + 1;
+                if (typeof document.querySelector("#d" + basenum) === "object") {
+                    document.querySelector("#d" + basenum).innerText = foremonth + "/" + foredate;
+                    document.querySelector("#day" + basenum).innerHTML = temphtml;
+                    temphtml = "";
+                    basenum++;
+                }
             }
-        }
-        if (i === fore.list.length - 1) {
-            basedate = tempdate.getDate();
-            tempdate = new Date(fore.list[i - 1].dt * 1000);
-            foredate = tempdate.getDate();
-            foremonth = tempdate.getMonth() + 1;
-            if (document.querySelector("#d" + basenum)) {
-                document.querySelector("#d" + basenum).innerText = foremonth + "/" + foredate;
-                document.querySelector("#day" + basenum).innerHTML = temphtml;
-                temphtml = "";
-                basenum++;
+            if (i === fore.list.length - 1) {
+                basedate = tempdate.getDate();
+                tempdate = new Date(fore.list[i - 1].dt * 1000);
+                foredate = tempdate.getDate();
+                foremonth = tempdate.getMonth() + 1;
+                if (document.querySelector("#d" + basenum)) {
+                    document.querySelector("#d" + basenum).innerText = foremonth + "/" + foredate;
+                    document.querySelector("#day" + basenum).innerHTML = temphtml;
+                    temphtml = "";
+                    basenum++;
+                }
             }
         }
     }
@@ -158,9 +159,12 @@ function search() {
     location.hash = "#citylist";
 }
 
-function aftersearch(id){
+function aftersearch(id) {
     history.back();
-    setTimeout(function(){document.getElementById("finalists").innerHTML = "";document.getElementById("cityquery").value = ""}, 1000)
+    setTimeout(function () {
+        document.getElementById("finalists").innerHTML = "";
+        document.getElementById("cityquery").value = ""
+    }, 1000)
     req(id);
 }
 
