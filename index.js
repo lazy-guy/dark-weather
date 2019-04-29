@@ -12,14 +12,14 @@ var ishome = false;
 var s_href = "https://simply-js.github.io/dark-weather/index.html";
 if (localStorage.getItem("last")) {
     last = JSON.parse(localStorage.getItem("last"));
-}else {
+} else {
     last = {
-        id:"9090909090"
+        id: "9090909090"
     }
 }
 if (localStorage.getItem("lastforecast")) {
     lastforecast = JSON.parse(localStorage.getItem("lastforecast"));
-}else {
+} else {
     lastforecast = {
         city: {
             id: "9090909090"
@@ -93,7 +93,7 @@ function req(place) {
         });
     }
     if (typeof lastforecast !== "undefined" && lastforecast.city.id == place && lastforecast.cod !== "404" && utcTime - last.dt < 3600) {
-            forecast(lastforecast);
+        forecast(lastforecast);
     } else {
         fetch(`https://api.openweathermap.org/data/2.5/forecast?id=${place}&units=${unit}&APPID=${apikey}`).then(function (result) {
             return result.json()
@@ -165,19 +165,22 @@ function forecast(fore) {
 }
 
 function search() {
-    if(window.location.hash !== "#citylist" && ishome === false){
-    window.history.pushState("City", "City", s_href + "#citylist");
-    ishome = true;
-    }else {
+    if (window.location.hash !== "#citylist" && ishome === false) {
+        window.history.pushState("City", "City", s_href + "#citylist");
+        ishome = true;
+    } else {
         window.history.replaceState("City", "City", s_href + "#citylist");
     }
     document.getElementById("citylist").style.top = "0";
     document.getElementById("main").style.overflowY = "hidden";
+    if (typeof citylist === "undefined") {
+        fetchjson();
+    }
 }
 
 function aftersearch(id) {
-    if(window.location.hash !== "#main"){
-    window.history.replaceState("Main", "main", s_href + "#main");
+    if (window.location.hash !== "#main") {
+        window.history.replaceState("Main", "main", s_href + "#main");
     }
     document.getElementById("citylist").style.top = "110vh";
     document.getElementById("main").style.overflowY = "auto";
@@ -188,10 +191,10 @@ function aftersearch(id) {
     req(id);
 }
 
-function closesearch(){
-    if(window.location.hash !== "#main"){
+function closesearch() {
+    if (window.location.hash !== "#main") {
         window.history.replaceState("Main", "main", s_href + "#main");
-        }
+    }
     document.getElementById("citylist").style.top = "110vh";
     document.getElementById("main").style.overflow = "auto";
     setTimeout(function () {
@@ -313,12 +316,10 @@ function init(res) {
     }
 }
 
-fetchjson();
-
-window.addEventListener("popstate", function(){
-    if(window.location.hash == "#citylist"){
+window.addEventListener("popstate", function () {
+    if (window.location.hash == "#citylist") {
         search();
-    }else {
+    } else {
         closesearch();
     }
 })
