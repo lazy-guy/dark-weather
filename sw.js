@@ -18,22 +18,11 @@ self.addEventListener('install', function (e) {
 });
 
 self.addEventListener('fetch', event => {
-  if (event.request.url.startsWith(self.location.origin)) {
-    event.respondWith(
-      caches.match(event.request).then(cachedResponse => {
-        if (cachedResponse) {
-          return cachedResponse;
-        }
-        return caches.open('dark-weather').then(cache => {
-          return fetch(event.request).then(response => {
-            return cache.put(event.request, response.clone()).then(() => {
-              return response;
-            });
-          });
-        });
-      })
-    );
-  }
+  event.respondWith(async function() {
+    const cachedResponse = await caches.match(event.request);
+    if (cachedResponse) return cachedResponse;
+    return fetch(event.request);
+  }());
 });
 
 
