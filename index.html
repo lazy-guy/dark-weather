@@ -16,74 +16,76 @@
 
 <body>
     <main id="main">
-    <div id="top">
-        <div class="container">
-            <div id="place">Loading...</div>
-            <button id="search" onclick="search()">&#128270;</button>
+        <div id="top">
+            <div class="container">
+                <div id="place">Loading...</div>
+                <button id="search" onclick="search()">&#128270;</button>
+            </div>
+            <div id="temp">...</div>
+            <div id="weather"><i id="wimg"></i></div>
         </div>
-        <div id="temp">...</div>
-        <div id="weather"><i id="wimg"></i></div>
-    </div>
-    <div id="extras">
-        <div class="container">
-            <div id="minmaxtext"></div>
-            <div id="minmax" class="end">
+        <div id="extras">
+            <div class="container">
+                <div id="minmaxtext"></div>
+                <div id="minmax" class="end">
+                </div>
+            </div>
+            <div class="container" id="pressure-c">
+                <div>Pressure</div>
+                <div id="pressure" class="end">?</div>
+            </div>
+            <div class="container" id="humidity-c">
+                <div>Humidity</div>
+                <div id="humidity" class="end">?</div>
+            </div>
+            <div class="container" id="wind-c">
+                <div>Wind</div>
+                <div id="wind" class="end">?</div>
+            </div>
+            <div class="container" id="rain-c">
+                <div>Rain</div>
+                <div id="rain" class="end">?</div>
+            </div>
+            <div class="container" id="sunrise-c">
+                <div>Sunrise</div>
+                <div id="sunrise" class="end">?</div>
+            </div>
+            <div class="container" id="sunset-c">
+                <div>Sunset</div>
+                <div id="sunset" class="end">?</div>
             </div>
         </div>
-        <div class="container" id="pressure-c">
-            <div>Pressure</div>
-            <div id="pressure" class="end">?</div>
+        <div class="day">
+            <div class="date" id="d1"></div>
+            <div class="fiveday" id="day1">
+            </div>
         </div>
-        <div class="container" id="humidity-c">
-            <div>Humidity</div>
-            <div id="humidity" class="end">?</div>
+        <div class="day">
+            <div class="date" id="d2"></div>
+            <div class="fiveday" id="day2">
+            </div>
         </div>
-        <div class="container" id="wind-c">
-            <div>Wind</div>
-            <div id="wind" class="end">?</div>
+        <div class="day">
+            <div class="date" id="d3"></div>
+            <div class="fiveday" id="day3">
+            </div>
         </div>
-        <div class="container" id="rain-c">
-            <div>Rain</div>
-            <div id="rain" class="end">?</div>
+        <div class="day">
+            <div class="date" id="d4"></div>
+            <div class="fiveday" id="day4">
+            </div>
         </div>
-        <div class="container" id="sunrise-c">
-            <div>Sunrise</div>
-            <div id="sunrise" class="end">?</div>
+        <div class="day">
+            <div class="date" id="d5"></div>
+            <div class="fiveday" id="day5">
+            </div>
         </div>
-        <div class="container" id="sunset-c">
-            <div>Sunset</div>
-            <div id="sunset" class="end">?</div>
-        </div>
-    </div>
-    <div class="day">
-        <div class="date" id="d1"></div>
-        <div class="fiveday" id="day1">
-        </div>
-    </div>
-    <div class="day">
-        <div class="date" id="d2"></div>
-        <div class="fiveday" id="day2">
-        </div>
-    </div>
-    <div class="day">
-        <div class="date" id="d3"></div>
-        <div class="fiveday" id="day3">
-        </div>
-    </div>
-    <div class="day">
-        <div class="date" id="d4"></div>
-        <div class="fiveday" id="day4">
-        </div>
-    </div>
-    <div class="day">
-        <div class="date" id="d5"></div>
-        <div class="fiveday" id="day5">
-        </div>
-    </div>
     </main>
     <div id="citylist">
         <button id="closesearch" onclick="closesearch()">&times;</button>
-        <label for="cityquery"><h3>Enter City Name:-</h3></label>
+        <label for="cityquery">
+            <h3>Enter City Name:-</h3>
+        </label>
         <input type="text" id="cityquery" oninput="cities()">
         <div id="finalists"></div>
     </div>
