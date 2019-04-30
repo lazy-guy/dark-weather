@@ -78,9 +78,14 @@ function isfinalist(src) {
         return src.name;
     }
 }
-
-
+var toaster = document.getElementById("toaster");
 function req(place) {
+    if(!navigator.onLine){
+        toaster.style.bottom = "0vh";
+        setTimeout(function () {
+        toaster.style.bottom = "-50vh";
+        }, 4000)
+    }
     date = new Date();
     utcTime = parseInt(date.getTime() / 1000);
     if (typeof last !== "undefined" && last.id == place && utcTime - last.dt < 1200) {
