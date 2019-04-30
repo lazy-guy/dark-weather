@@ -17,14 +17,14 @@ self.addEventListener('install', function (e) {
 
 self.addEventListener('fetch', event => {
   event.respondWith(
-    fetch(request)
+    fetch(event.request)
     .then(response => {
       if (response.ok)
         addToCache(pagesCacheName, request, response.clone());
       return response;
     })
     .catch(() => {
-      return caches.match(request).then(response => {
+      return caches.match(event.request).then(response => {
         return response;
       })
     })
