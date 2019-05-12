@@ -60,6 +60,8 @@ async function fetchjson() {
     });
 }
 
+
+
 function cities() {
     if (citydefinitions) {
         if (document.getElementById("cityquery").value.length == 0) {
@@ -68,7 +70,11 @@ function cities() {
         }
         var str = document.getElementById("cityquery").value;
         tempre = new RegExp(`^${str}`, 'gi')
-        var finale = citylist.filter(isfinalist);
+        var finale = citylist.filter(function(src) {
+            if (tempre.test(src.name)) {
+                return src.name;
+            }
+        });
         var cityhtml = " ";
         var ii;
         if (finale.length > 50) {
@@ -89,11 +95,6 @@ function cities() {
     }
 }
 
-function isfinalist(src) {
-    if (tempre.test(src.name)) {
-        return src.name;
-    }
-}
 var toaster = document.getElementById("toaster");
 
 function req(place) {
