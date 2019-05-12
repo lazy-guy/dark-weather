@@ -10,7 +10,7 @@ var mintemp;
 var maxtemp;
 var ishome = false;
 var citydefinitions = false;
-var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 var searchtemplate = `<button id="closesearch" onclick="closesearch()">&times;</button>
 <label for="cityquery">
     <h3>Enter City Name:-</h3>
@@ -50,28 +50,38 @@ if (localStorage.getItem("city")) {
     search();
 }
 
-var tempre;
 var citylist;
 async function fetchjson() {
     const cityList = await fetch("city.list.min.json").then(function (res) {
-        citylist = res.json();
-    }).then(function (res) {
         citydefinitions = true;
         document.getElementById("citylist").innerHTML = searchtemplate;
+        return res;
     });
+    citylist = await cityList.json();
 }
 
-
-
 function cities() {
+    if (window.location.hash === "#citylist") {
+        document.addEventListener("keyup", function (evt) {
+            if (evt.keyCode === 13) {
+                var cards = document.getElementsByClassName("card");
+                if (cards[0]) {
+                    cards[0].click();
+                }
+            }
+            if (evt.keyCode === 27) {
+                document.getElementById("closesearch").click();
+            }
+        })
+    }
     if (citydefinitions) {
-        if (document.getElementById("cityquery").value.length == 0) {
+        if (document.getElementById("cityquery").value.length < 2) {
             document.getElementById("finalists").innerHTML = "";
             return;
-        }
-        var str = document.getElementById("cityquery").value;
-        tempre = new RegExp(`^${str}`, 'gi')
-        var finale = citylist.filter(function(src) {
+        } else
+            var str = document.getElementById("cityquery").value;
+        var tempre = new RegExp(`^${str}`, 'gi')
+        var finale = citylist.filter(function (src) {
             if (tempre.test(src.name)) {
                 return src.name;
             }
@@ -166,7 +176,7 @@ function forecast(fore) {
                 foredate = tempdate.getDate();
                 foremonth = tempdate.getMonth();
                 if (typeof document.querySelector("#d" + basenum) === "object") {
-                    document.querySelector("#d" + basenum).innerText = foredate + "&nbsp;"+ months[foremonth];
+                    document.querySelector("#d" + basenum).innerText = foredate + "&nbsp;" + months[foremonth];
                     document.querySelector("#day" + basenum).innerHTML = temphtml;
                     temphtml = "";
                     basenum++;
@@ -178,7 +188,7 @@ function forecast(fore) {
                 foredate = tempdate.getDate();
                 foremonth = tempdate.getMonth();
                 if (document.querySelector("#d" + basenum)) {
-                    document.querySelector("#d" + basenum).innerText = foredate + "&nbsp;"+ months[foremonth];
+                    document.querySelector("#d" + basenum).innerText = foredate + "&nbsp;" + months[foremonth];
                     document.querySelector("#day" + basenum).innerHTML = temphtml;
                     temphtml = "";
                     basenum++;
