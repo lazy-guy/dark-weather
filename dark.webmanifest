@@ -10,7 +10,7 @@
   "name": "Dark Weather",
   "lang": "en-US",
   "short_name": "Weather",
-  "start_url": "/index.html",
+  "start_url": "/dark-weather/index.html",
   "theme_color": "#111111",
-  "scope": "/index.html"
+  "scope": "/dark-weather/index.html"
 }

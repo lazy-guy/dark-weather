@@ -9,7 +9,19 @@ var utcTime;
 var mintemp;
 var maxtemp;
 var ishome = false;
-var s_href = "https://simply-js.github.io/dark-weather/index.html";
+var citydefinitions = false;
+var searchtemplate = `<button id="closesearch" onclick="closesearch()">&times;</button>
+<label for="cityquery">
+    <h3>Enter City Name:-</h3>
+</label>
+<input type="text" id="cityquery" oninput="cities()">
+<div id="finalists"></div>`
+var s_hash;
+var s_href = window.location.href;
+if (window.location.hash) {
+    s_hash = window.location.hash.substring(1);
+    s_href = s_href.replace(window.location.hash, "");
+}
 if (localStorage.getItem("last")) {
     last = JSON.parse(localStorage.getItem("last"));
 } else {
@@ -40,12 +52,16 @@ if (localStorage.getItem("city")) {
 var tempre;
 var citylist;
 async function fetchjson() {
-    const cityList = await fetch("city.list.min.json");
-    citylist = await cityList.json();
+    const cityList = await fetch("city.list.min.json").then(async function (res) {
+        citydefinitions = true;
+        document.getElementById("citylist").innerHTML = searchtemplate;
+        citylist = await res.json();
+    });
+
 }
 
 function cities() {
-    if (citylist) {
+    if (citydefinitions) {
         if (document.getElementById("cityquery").value.length == 0) {
             document.getElementById("finalists").innerHTML = "";
             return;
@@ -79,11 +95,12 @@ function isfinalist(src) {
     }
 }
 var toaster = document.getElementById("toaster");
+
 function req(place) {
-    if(!navigator.onLine){
+    if (!navigator.onLine) {
         toaster.style.bottom = "0vh";
         setTimeout(function () {
-        toaster.style.bottom = "-50vh";
+            toaster.style.bottom = "-50vh";
         }, 4000)
     }
     date = new Date();
