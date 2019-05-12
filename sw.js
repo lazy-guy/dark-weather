@@ -18,6 +18,9 @@ self.addEventListener('install', function (e) {
 });
 
 self.addEventListener('fetch', event => {
+  if(event.request.url.indexOf("2aca00e2d1ef80c8d993467bb7c58e83") !== -1){
+    return;
+  }else
   event.respondWith(async function() {
     const cachedResponse = await caches.match(event.request);
     if (cachedResponse) return cachedResponse;

@@ -55,14 +55,8 @@ async function fetchjson() {
     const cityList = await fetch("city.list.min.json").then(function (res) {
         citydefinitions = true;
         document.getElementById("citylist").innerHTML = searchtemplate;
-        return res;
-    });
-    citylist = await cityList.json();
-}
-
-function cities() {
-    if (window.location.hash === "#citylist") {
         document.addEventListener("keyup", function (evt) {
+            console.log(evt);
             if (evt.keyCode === 13) {
                 var cards = document.getElementsByClassName("card");
                 if (cards[0]) {
@@ -72,8 +66,15 @@ function cities() {
             if (evt.keyCode === 27) {
                 document.getElementById("closesearch").click();
             }
-        })
-    }
+        }, true)
+        return res;
+    });
+    citylist = await cityList.json();
+}
+
+
+
+function cities() {
     if (citydefinitions) {
         if (document.getElementById("cityquery").value.length < 2) {
             document.getElementById("finalists").innerHTML = "";
@@ -96,7 +97,7 @@ function cities() {
 
         for (var i = 0; i < ii; i++) {
             var obj = finale[i];
-            cityhtml += `<div class="card" onclick="aftersearch(${obj.id})"> ${obj.name}, ${obj.country.toUpperCase()}<br />Lat = ${obj.coord.lat} , Long = ${obj.coord.lon}</div>`
+            cityhtml += `<div class="card" data-obj=${obj.id} onclick="aftersearch(${obj.id})"> ${obj.name}, ${obj.country.toUpperCase()}<br />Lat = ${obj.coord.lat} , Long = ${obj.coord.lon}</div>`
         }
         if (cityhtml !== " ") {
             document.getElementById("finalists").innerHTML = cityhtml;
@@ -114,6 +115,7 @@ function req(place) {
         setTimeout(function () {
             toaster.style.bottom = "-50vh";
         }, 4000)
+        return;
     }
     date = new Date();
     utcTime = parseInt(date.getTime() / 1000);
