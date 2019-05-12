@@ -176,7 +176,7 @@ function forecast(fore) {
                 foredate = tempdate.getDate();
                 foremonth = tempdate.getMonth();
                 if (typeof document.querySelector("#d" + basenum) === "object") {
-                    document.querySelector("#d" + basenum).innerText = foredate + "&nbsp;" + months[foremonth];
+                    document.querySelector("#d" + basenum).innerText = foredate + " " + months[foremonth];
                     document.querySelector("#day" + basenum).innerHTML = temphtml;
                     temphtml = "";
                     basenum++;
@@ -188,7 +188,7 @@ function forecast(fore) {
                 foredate = tempdate.getDate();
                 foremonth = tempdate.getMonth();
                 if (document.querySelector("#d" + basenum)) {
-                    document.querySelector("#d" + basenum).innerText = foredate + "&nbsp;" + months[foremonth];
+                    document.querySelector("#d" + basenum).innerText = foredate + " " + months[foremonth];
                     document.querySelector("#day" + basenum).innerHTML = temphtml;
                     temphtml = "";
                     basenum++;
