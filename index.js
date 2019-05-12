@@ -10,6 +10,7 @@ var mintemp;
 var maxtemp;
 var ishome = false;
 var citydefinitions = false;
+var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 var searchtemplate = `<button id="closesearch" onclick="closesearch()">&times;</button>
 <label for="cityquery">
     <h3>Enter City Name:-</h3>
@@ -163,9 +164,9 @@ function forecast(fore) {
                 basedate = tempdate.getDate();
                 tempdate = new Date(fore.list[i - 1].dt * 1000);
                 foredate = tempdate.getDate();
-                foremonth = tempdate.getMonth() + 1;
+                foremonth = tempdate.getMonth();
                 if (typeof document.querySelector("#d" + basenum) === "object") {
-                    document.querySelector("#d" + basenum).innerText = foremonth + "/" + foredate;
+                    document.querySelector("#d" + basenum).innerText = foredate + "&nbsp;"+ months[foremonth];
                     document.querySelector("#day" + basenum).innerHTML = temphtml;
                     temphtml = "";
                     basenum++;
@@ -175,9 +176,9 @@ function forecast(fore) {
                 basedate = tempdate.getDate();
                 tempdate = new Date(fore.list[i - 1].dt * 1000);
                 foredate = tempdate.getDate();
-                foremonth = tempdate.getMonth() + 1;
+                foremonth = tempdate.getMonth();
                 if (document.querySelector("#d" + basenum)) {
-                    document.querySelector("#d" + basenum).innerText = foremonth + "/" + foredate;
+                    document.querySelector("#d" + basenum).innerText = foredate + "&nbsp;"+ months[foremonth];
                     document.querySelector("#day" + basenum).innerHTML = temphtml;
                     temphtml = "";
                     basenum++;
