@@ -52,12 +52,12 @@ if (localStorage.getItem("city")) {
 var tempre;
 var citylist;
 async function fetchjson() {
-    const cityList = await fetch("city.list.min.json").then(async function (res) {
+    const cityList = await fetch("city.list.min.json").then(function (res) {
+        citylist = res.json();
+    }).then(function (res) {
         citydefinitions = true;
         document.getElementById("citylist").innerHTML = searchtemplate;
-        citylist = await res.json();
     });
-
 }
 
 function cities() {
