@@ -50,6 +50,17 @@ if (localStorage.getItem("city")) {
     search();
 }
 
+function offlinehandler(e){
+    if (!navigator.onLine) {
+        toaster.style.bottom = "0vh";
+        setTimeout(function () {
+            toaster.style.bottom = "-50vh";
+        }, 4000)
+    }
+}
+window.addEventListener("load", offlinehandler);
+window.addEventListener("offline", offlinehandler);
+
 var citylist;
 async function fetchjson() {
     const cityList = await fetch("city.list.min.json").then(function (res) {
@@ -111,12 +122,9 @@ var toaster = document.getElementById("toaster");
 
 function req(place) {
     if (!navigator.onLine) {
-        toaster.style.bottom = "0vh";
-        setTimeout(function () {
-            toaster.style.bottom = "-50vh";
-        }, 4000)
+        offlinehandler("hello");
         return;
-    }
+    }else
     date = new Date();
     utcTime = parseInt(date.getTime() / 1000);
     if (typeof last !== "undefined" && last.id == place && utcTime - last.dt < 1200) {
