@@ -54,9 +54,11 @@ var citylist;
 async function fetchjson() {
     const cityList = await fetch("city.list.min.json").then(function (res) {
         citydefinitions = true;
+        return res.json();
+    }).then(function (resj) {
+        citylist = resj;
         document.getElementById("citylist").innerHTML = searchtemplate;
         document.addEventListener("keyup", function (evt) {
-            console.log(evt);
             if (evt.keyCode === 13) {
                 var cards = document.getElementsByClassName("card");
                 if (cards[0]) {
@@ -66,10 +68,8 @@ async function fetchjson() {
             if (evt.keyCode === 27) {
                 document.getElementById("closesearch").click();
             }
-        }, true)
-        return res;
+        });
     });
-    citylist = await cityList.json();
 }
 
 
