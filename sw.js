@@ -1,5 +1,5 @@
 var cacheurl = [
-  '/dark-weather',
+  '/dark-weather/',
   '/dark-weather/index.html',
   '/dark-weather/index.js',
   '/dark-weather/css/index.css',
@@ -24,8 +24,6 @@ self.addEventListener('fetch', event => {
     return fetch(event.request);
   }());
 });
-
-
 
 self.addEventListener("onupdatefound", function () {
   registration.update();

@@ -12,5 +12,5 @@
   "short_name": "Weather",
   "start_url": "/dark-weather/index.html",
   "theme_color": "#111111",
-  "scope": "/dark-weather/index.html"
+  "scope": "/dark-weather/"
 }

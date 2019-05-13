@@ -199,6 +199,7 @@ body, html{
     box-shadow:0 4px 20px 0 black;
 }
 #toaster{
+    width: 100vw;
     z-index: 999;
     box-sizing: border-box;
     position: fixed;
