@@ -7,7 +7,7 @@
     "sizes": "192x192",
     "type": "image/png"
   }],
-  "name": "Dark Weather",
+  "name": "Simple Weather",
   "lang": "en-US",
   "short_name": "Weather",
   "start_url": "/dark-weather/index.html",
