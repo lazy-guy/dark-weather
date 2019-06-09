@@ -1,4 +1,5 @@
-body, html{
+body,
+html {
     margin: 0px;
     padding: 0px;
     font-family: sans-serif;
@@ -9,146 +10,177 @@ body, html{
     font-size: 20px;
     font-weight: 400;
 }
-#top{
+
+* {
+    box-sizing: border-box;
+}
+
+#top {
     border-radius: 10px;
     width: 90vw;
     margin: 10px auto 20px auto;
     padding-top: 20px;
     background-color: rgb(12, 18, 43);
-    transition: all 400ms;
 }
-#search{
+
+#search {
     display: block;
-    position: absolute;
-    right: 2vw;
-    top: 2vh;
-    background-color: rgba(255, 255, 255, 0.623);
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
+    background-color: royalblue;
+    color: #fff;
     border-radius: 50%;
     border: none;
     margin-left: auto;
     margin-right: 10px;
-    width: 40px;
-    height: 40px;
+    width: 54px;
+    height: 54px;
+    font-size: 32px;
     outline: none;
-    transition: all 400ms;
 }
-#search:hover{
-    background-color: white;
+
+#search:hover {
+    box-shadow: 0px 3px 10px 2px silver;
 }
-#main{
+
+#main {
     overflow-x: hidden;
+    padding: 30px 0px 70px 0px;
 }
-#temp{
+
+#temp {
     padding-left: 20px;
-    font-size: 6rem;
+    font-size: 5rem;
     font-weight: 700;
 }
-#weather{
+
+#weather {
     padding: 10px 0px 10px 20px;
     font-size: 30px;
     font-weight: 300;
 }
 
-#place{
+#place {
     padding: 10px 0px 10px 20px;
     font-size: 1em;
     font-weight: 300;
 }
-#extras{
+
+#extras {
     padding: 2vh 2vw 2vh 2vw;
     border-radius: 10px;
     width: 86vw;
     background-color: rgb(12, 18, 43);
     display: none;
     margin: auto;
-    transition: all 400ms;
 }
-.day{
+
+.day {
     margin: 0px;
     padding: 0px;
-    width: 86vw;
+    width: auto;
+    min-width: 2px;
+    max-width: 86vw;
     height: auto;
     margin: 4vh auto 2vh auto;
-    transition: all 400ms;
     background-color: rgb(12, 18, 43);
     padding: 0px;
 }
-.fiveday{
+
+.fiveday {
     width: 100%;
     height: auto;
     margin: 0px;
     background-color: royalblue;
-    transition: all 400ms;
     padding: 0px;
     display: flex;
     overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
 }
-.date{
+
+.date {
     width: 100%;
     padding: 10px 20px;
-
 }
-.hours{
+
+.hours {
     height: 100%;
     padding: 0px 40px 0px 40px;
     text-align: center;
-    border-right: 1px solid black; 
+    border-right: 1px solid black;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
 }
-.wtitle{
+
+.wtitle {
     width: 100%;
     height: 40px;
     font-size: 30px;
     line-height: 40px;
     flex: 0 0 auto;
 }
-.icon{
+
+.icon {
     display: block;
     width: 100%;
     height: 150px;
+    padding-top: 10px;
     font-size: 90px;
     flex: 1 1 auto;
 }
-.time{
+
+.time {
     width: inherit;
     height: 40px;
     margin: 0px;
     flex: 0 1 auto;
 }
-.container{
+
+.container {
     display: flex;
 }
-.container div{
+
+.container div {
     width: 50%;
     margin: 10px 0 10px 0;
 }
-.end{
+
+.end {
     padding-right: 10px;
     text-align: end;
 }
-#rain-c{
+
+#rain-c {
     display: none;
 }
-#windimg{
+
+#windimg {
     font-size: 25px;
 }
+
 .fiveday::-webkit-scrollbar {
     width: 10px;
     height: 10px;
 }
+
 .fiveday::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0); 
+    background: rgba(0, 0, 0, 0);
 }
+
 .fiveday::-webkit-scrollbar-thumb {
-    background: rgb(39, 38, 38); 
+    background: rgb(39, 38, 38);
     border-radius: 12px;
 }
+
 .fiveday::-webkit-scrollbar-thumb:hover {
-    background: rgb(20, 20, 20); 
+    background: rgb(20, 20, 20);
     border-radius: 12px;
 }
-#citylist{
+
+#citylist {
     width: 100%;
     height: 100%;
     position: fixed;
@@ -161,44 +193,61 @@ body, html{
     transition: all 400ms;
     z-index: 2;
 }
-#closesearch{
+
+#closesearch {
     background-color: transparent;
-    color: #fff;
+    color: rgb(238, 230, 230);
     display: block;
     outline: none;
     border: none;
     position: absolute;
     top: 0;
+    width: 54px;
+    height: 54px;
     right: 5px;
     z-index: 3;
     font-size: 50px;
-    transition: all 1000ms;
+    transition: color 1000ms;
+    transform-origin: center;
 }
-#closesearch:hover{
-    transform: rotateZ(360deg);
+
+#closesearch:hover {
+    color: #fff;
 }
-#citylist label{
+
+#citylist label {
     display: block;
     margin-left: 10px;
 }
-#cityquery{
+
+#cityquery {
     width: calc(90% - 15px);
     padding: 10px;
     margin-bottom: 20px;
 }
-.card{
+
+#searchinput {
+    width: 100%;
+    margin: 100px 0px 0px 0px;
+    padding: 0px;
+}
+
+.card {
     width: calc(90% - 15px);
     margin: 20px auto 20px auto;
     padding: 15px;
-    box-shadow:0 2px 4px 0 black;
+    font-size: 1rem;
+    box-shadow: 0 2px 4px 0 black;
     border-radius: 10px;
-    transition: all 200ms;
+    transition: transform 200ms, box-shadow 200ms;
 }
-.card:hover{
+
+.card:hover {
     transform: scale(1.01);
-    box-shadow:0 4px 20px 0 black;
+    box-shadow: 0 4px 20px 0 black;
 }
-#toaster{
+
+#toaster {
     width: 100vw;
     z-index: 999;
     box-sizing: border-box;
@@ -210,4 +259,150 @@ body, html{
     background-color: #222222;
     color: white;
     font-family: sans-serif;
+}
+
+.s-kebab {
+    display: inline-block;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 54px;
+    height: 54px;
+    margin: 0px;
+    padding: 0px;
+    border-radius: 50%;
+    box-shadow: 0px 2px 8px 2px silver;
+}
+
+.s-kebab-opener {
+    display: block;
+    text-align: center;
+    padding: 0px;
+    font-family: sans-serif;
+    width: 54px;
+    height: 54px;
+    border: none;
+    border-radius: 50%;
+    font-size: 36px;
+    line-height: 54px;
+    background-color: rgba(255, 255, 255, 0.705);
+    color: #000;
+}
+
+.s-kebab-opener:hover {
+    background-color: #fff;
+}
+
+.s-kebab-content {
+    transform: scale(0);
+    position: absolute;
+    top: 0px;
+    transition: all 200ms;
+    transition-delay: 100ms;
+    color: #fff;
+    font-size: 1rem;
+    background-color: rgb(85, 83, 83);
+    box-shadow: 1px 0px 10px 0px gray;
+    right: 0px;
+    transform-origin: top right;
+}
+
+.s-kebab ul {
+    display: block;
+    list-style: none;
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    font-weight: 400;
+}
+
+.s-kebab li {
+    padding: 0px;
+    width: 100%;
+    white-space: nowrap;
+    margin: 0px;
+    transition: background-color 400ms;
+    text-align: left;
+}
+
+li button {
+    display: block;
+    padding: 10px 50px 10px 10px !important;
+    text-align: left;
+    width: 100%;
+    border: none;
+    padding: 0px;
+    background-color: transparent;
+    font-size: inherit;
+    color: inherit;
+}
+
+li button:hover {
+    background-color: #b4b4b4;
+}
+
+.s-kebab-opener:focus~.s-kebab-content {
+    transform: scale(1);
+}
+
+
+/* Light Theme */
+
+body.light {
+    background-color: #fff;
+    color: #000;
+}
+
+.light #top,
+.light #extras {
+    background-color: #fff;
+    box-shadow: 0px 2px 10px 2px silver;
+}
+
+.light .day {
+    background-color: #eeeeee;
+    box-shadow: 0px 2px 10px 2px silver;
+}
+
+.light .fiveday {
+    background-color: #fefefe;
+}
+
+.light #citylist {
+    background-color: #fff;
+    border-top: 1px solid black;
+}
+
+.light #closesearch {
+    color: rgb(177, 177, 177);
+}
+
+.light #closesearch:hover {
+    color: #000;
+}
+
+.light .s-kebab-content,
+.light .s-kebab-opener {
+    background-color: #fff;
+    color: #000;
+}
+
+@media screen and (min-width:720px) {
+    #searchinput {
+        width: 100%;
+        margin: 0px 0px 0px 0px;
+        padding: 0px;
+    }
+
+    #top,
+    #extras {
+        width: 45vw;
+        box-sizing: border-box;
+    }
+
+    #maincards {
+        display: flex;
+        margin-bottom: 40px;
+    }
 }

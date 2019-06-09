@@ -3,11 +3,11 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="theme-color" content="#111111">
     <link rel="stylesheet" href="css/index.css">
-	<meta name="description" content="A simple Weather app based on OpenWeatherMap API">
+    <meta name="description" content="A simple Weather app based on OpenWeatherMap API">
     <!-- Icons from https://erikflowers.github.io/weather-icons/ -->
     <link rel="stylesheet" href="css/weather-icons-wind.min.css">
     <link rel="stylesheet" href="css/weather-icons.min.css">
@@ -19,43 +19,53 @@
 
 <body>
     <main id="main">
-        <div id="top">
-            <div class="container">
-                <div id="place">Loading...</div>
-                <button id="search" onclick="search()">&#128270;</button>
+        <div id="maincards">
+            <div id="top">
+                <div class="container">
+                    <div id="place">Loading...</div>
+                </div>
+                <div id="temp">...</div>
+                <div id="weather"><i id="wimg"></i></div>
             </div>
-            <div id="temp">...</div>
-            <div id="weather"><i id="wimg"></i></div>
-        </div>
-        <div id="extras">
-            <div class="container">
-                <div id="minmaxtext"></div>
-                <div id="minmax" class="end">
+            <div id="extras">
+                <div class="container">
+                    <div id="minmaxtext"></div>
+                    <div id="minmax" class="end">
+                    </div>
+                </div>
+                <div class="container" id="pressure-c">
+                    <div>Pressure</div>
+                    <div id="pressure" class="end">?</div>
+                </div>
+                <div class="container" id="humidity-c">
+                    <div>Humidity</div>
+                    <div id="humidity" class="end">?</div>
+                </div>
+                <div class="container" id="wind-c">
+                    <div>Wind</div>
+                    <div id="wind" class="end">?</div>
+                </div>
+                <div class="container" id="rain-c">
+                    <div>Rain</div>
+                    <div id="rain" class="end">?</div>
+                </div>
+                <div class="container" id="sunrise-c">
+                    <div>Sunrise</div>
+                    <div id="sunrise" class="end">?</div>
+                </div>
+                <div class="container" id="sunset-c">
+                    <div>Sunset</div>
+                    <div id="sunset" class="end">?</div>
                 </div>
             </div>
-            <div class="container" id="pressure-c">
-                <div>Pressure</div>
-                <div id="pressure" class="end">?</div>
-            </div>
-            <div class="container" id="humidity-c">
-                <div>Humidity</div>
-                <div id="humidity" class="end">?</div>
-            </div>
-            <div class="container" id="wind-c">
-                <div>Wind</div>
-                <div id="wind" class="end">?</div>
-            </div>
-            <div class="container" id="rain-c">
-                <div>Rain</div>
-                <div id="rain" class="end">?</div>
-            </div>
-            <div class="container" id="sunrise-c">
-                <div>Sunrise</div>
-                <div id="sunrise" class="end">?</div>
-            </div>
-            <div class="container" id="sunset-c">
-                <div>Sunset</div>
-                <div id="sunset" class="end">?</div>
+        </div>
+        <div class="s-kebab">
+            <button class="s-kebab-opener bg-blue c-white">&nbsp;&#x2807;</button>
+            <div class="s-kebab-content">
+                <ul>
+                    <li class="h-bg-gray"><button id="unitbtn" onclick="changeunits()">Change units</button></li>
+                    <li class="h-bg-gray"><button id="themebtn" onclick="changetheme()">Toggle Dark mode</button></li>
+                </ul>
             </div>
         </div>
         <div class="day">
@@ -84,10 +94,11 @@
             </div>
         </div>
     </main>
-    <div id="toaster">No Internet Connection!</div>
+    <button id="search" onclick="search()">&#128270;</button>
+    <div id="toaster"></div>
     <div id="citylist">
         <button id="closesearch" onclick="closesearch()">&times;</button>
-            <h3>Loading City Names... Please wait</h3>
+        <h3>Loading City Names... Please wait</h3>
     </div>
     <script src="index.js"></script>
     <script>

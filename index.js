@@ -1,5 +1,4 @@
 var apikey = "2aca00e2d1ef80c8d993467bb7c58e83";
-var unit = "metric";
 var last;
 var lastTime;
 var lastforecast;
@@ -10,12 +9,29 @@ var mintemp;
 var maxtemp;
 var ishome = false;
 var citydefinitions = false;
+var is_toasting = false;
+var unit;
+var theme;
+if (localStorage.getItem("theme")) {
+    theme = localStorage.getItem("theme");
+    if(theme === "light"){
+        document.querySelector("body").className = "light";
+    }
+} else {
+    theme = "dark";
+}
+if (localStorage.getItem("unit")) {
+    unit = localStorage.getItem("unit");
+} else {
+    unit = "metric"
+}
 var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-var searchtemplate = `<button id="closesearch" onclick="closesearch()">&times;</button>
+var searchtemplate = `<button id="closesearch" onclick="closesearch()">&times;</button><div id="searchinput">
 <label for="cityquery">
     <h3>Enter City Name:-</h3>
 </label>
 <input type="text" id="cityquery" oninput="cities()">
+</div>
 <div id="finalists"></div>`
 var s_hash;
 var s_href = window.location.href;
@@ -50,17 +66,6 @@ if (localStorage.getItem("city")) {
     search();
 }
 
-function offlinehandler(e){
-    if (!navigator.onLine) {
-        toaster.style.bottom = "0vh";
-        setTimeout(function () {
-            toaster.style.bottom = "-50vh";
-        }, 4000)
-    }
-}
-window.addEventListener("load", offlinehandler);
-window.addEventListener("offline", offlinehandler);
-
 var citylist;
 async function fetchjson() {
     const cityList = await fetch("city.list.min.json").then(function (res) {
@@ -87,7 +92,11 @@ async function fetchjson() {
 
 function cities() {
     if (citydefinitions) {
-        if (document.getElementById("cityquery").value.length < 2) {
+        var cityvalue = document.getElementById("cityquery").value;
+        if (cityvalue[cityvalue.length - 1] === " ") {
+            return
+        }
+        if (cityvalue.length == 0) {
             document.getElementById("finalists").innerHTML = "";
             return;
         } else
@@ -120,12 +129,49 @@ function cities() {
 
 var toaster = document.getElementById("toaster");
 
+function toast(msg) {
+    if (is_toasting == false) {
+        document.getElementById("toaster").innerHTML = msg;
+        document.getElementById("toaster").style.width = "100vw";
+        document.getElementById("toaster").style.bottom = "0vh";
+        is_toasting = true;
+        setTimeout(function () {
+            document.getElementById("toaster").style.bottom = "-50vh";
+            document.getElementById("toaster").innerHTML = "";
+            setTimeout(
+                function () {
+                    document.getElementById("toaster").innerHTML = "";
+                    is_toasting = false;
+                }, 500
+            )
+        }, 2500)
+    } else {
+        setTimeout(function () {
+            toast(msg)
+        }, 500)
+    }
+}
+
+function offlinehandler(e) {
+    if (!navigator.onLine) {
+        toast("No Internet Connection!");
+    }
+}
+window.addEventListener("load", offlinehandler);
+window.addEventListener("offline", offlinehandler);
+
+function hhmmss(num) {
+    if (num < 10) {
+        return "0" + num
+    } else return num
+}
+
 function req(place) {
     if (!navigator.onLine) {
-        offlinehandler("hello");
+        toast("No internet connection!");
         return;
-    }else
-    date = new Date();
+    } else
+        date = new Date();
     utcTime = parseInt(date.getTime() / 1000);
     if (typeof last !== "undefined" && last.id == place && utcTime - last.dt < 1200) {
         init(last);
@@ -133,6 +179,7 @@ function req(place) {
         fetch(`https://api.openweathermap.org/data/2.5/weather?id=${place}&units=${unit}&APPID=${apikey}`).then(function (result) {
             return result.json()
         }).then(function (res) {
+            last = res;
             init(res);
         });
     }
@@ -165,7 +212,7 @@ function forecast(fore) {
         maxtemp = Math.max.apply(Math, todaytemp);
         mintemp = Math.min.apply(Math, todaytemp);
         document.querySelector("#minmaxtext").innerText = "Max/Min";
-        document.querySelector("#minmax").innerHTML = parseInt(maxtemp) + "&deg;C/" + parseInt(mintemp) + "&deg;C";
+        document.querySelector("#minmax").innerHTML = parseInt(maxtemp) + `&deg;${(unit === "metric")?"C":"F"}&nbsp;/&nbsp;${parseInt(mintemp)}&deg;${(unit === "metric")?"C":"F"}`;
         var temphtml = "";
         tempdate = new Date(fore.list[0].dt * 1000);
         var basedate = tempdate.getDate();
@@ -176,9 +223,9 @@ function forecast(fore) {
             tempdate = new Date(fore.list[i].dt * 1000);
             if (tempdate.getDate() == basedate) {
                 temphtml += `<div class="hours">
-        <div class="wtitle">${fore.list[i].weather[0].main}&nbsp;${fore.list[i].main.temp.toFixed(0)}&deg;</div>
+        <div class="wtitle">${fore.list[i].weather[0].main}&nbsp;${fore.list[i].main.temp.toFixed(0)}&deg;${(unit === "metric")?"C":"F"}</div>
         <i class="icon wi wi-owm-${fore.list[i].weather[0].id}"></i>
-        <div class="time">${tempdate.getHours()}:00</div>
+        <div class="time">${hhmmss(tempdate.getHours())}:00</div>
         </div>`;
             } else {
                 basedate = tempdate.getDate();
@@ -255,21 +302,21 @@ function init(res) {
         city = res.id;
         localStorage.setItem("city", city);
         document.querySelector("#extras").style.display = "block";
-        document.querySelector("#temp").innerHTML = res.main.temp.toFixed(0) + "&deg;C";
+        document.querySelector("#temp").innerHTML = res.main.temp.toFixed(0) + `&deg;${(unit === "metric")?"C":"F"}`;
         document.querySelector("#weather").innerHTML = res.weather[0].main + '&nbsp;&nbsp;&nbsp;<i id="wimg"></i>';
         document.querySelector("#wimg").className = "wi wi-owm-" + res.weather[0].id;
         document.querySelector("#place").innerText = res.name;
-        document.querySelector("#pressure").innerText = res.main.pressure + " hPa";
+        document.querySelector("#pressure").innerHTML = res.main.pressure + " hPa" + '&nbsp;&nbsp;<i class="wi wi-barometer"></i>';
         if (typeof res.main.humidity !== "undefined") {
             document.querySelector("#humidity-c").style.display = "flex";
-            document.querySelector("#humidity").innerHTML = res.main.humidity + '&nbsp;<i class="wi wi-humidity"></i>';
+            document.querySelector("#humidity").innerHTML = res.main.humidity + '&nbsp;&nbsp;<i class="wi wi-humidity"></i>';
         } else {
             document.querySelector("#humidity-c").style.display = "none";
             document.querySelector("#humidity").innerText = "";
         }
         if (typeof res.wind.speed !== "undefined") {
             document.querySelector("#wind-c").style.display = "flex";
-            document.querySelector("#wind").innerHTML = res.wind.speed + ' m/s&nbsp;&nbsp;<i id="windimg"></i>';
+            document.querySelector("#wind").innerHTML = res.wind.speed + `&nbsp;${(unit === "metric")?"m/s":"mph"}&nbsp;&nbsp;<i id="windimg"></i>`;
             var winddeg = parseInt(res.wind.deg);
             var direction;
             if (winddeg >= 0 && winddeg <= 22) {
@@ -341,7 +388,7 @@ function init(res) {
         if (typeof res.sys.sunrise !== "undefined") {
             var sunrise = new Date(res.sys.sunrise * 1000);
             document.querySelector("#sunrise-c").style.display = "flex";
-            document.querySelector("#sunrise").innerHTML = sunrise.getHours() + ":" + sunrise.getMinutes() + ":" + sunrise.getSeconds() + '&nbsp;&nbsp;<i class="wi wi-sunrise"></i>';
+            document.querySelector("#sunrise").innerHTML = hhmmss(sunrise.getHours()) + ":" + hhmmss(sunrise.getMinutes()) + ":" + hhmmss(sunrise.getSeconds()) + '&nbsp;&nbsp;<i class="wi wi-sunrise"></i>';
         } else {
             document.querySelector("#sunrise-c").style.display = "none";
             document.querySelector("#sunrise").innerHTML = "";
@@ -349,7 +396,7 @@ function init(res) {
         if (typeof res.sys.sunset !== "undefined") {
             var sunset = new Date(res.sys.sunset * 1000);
             document.querySelector("#sunset-c").style.display = "flex";
-            document.querySelector("#sunset").innerHTML = sunset.getHours() + ":" + sunset.getMinutes() + ":" + sunset.getSeconds() + '&nbsp;&nbsp;<i class="wi wi-sunset"></i>';
+            document.querySelector("#sunset").innerHTML = hhmmss(sunset.getHours()) + ":" + hhmmss(sunset.getMinutes()) + ":" + hhmmss(sunset.getSeconds()) + '&nbsp;&nbsp;<i class="wi wi-sunset"></i>';
         } else {
             document.querySelector("#sunset-c").style.display = "none";
             document.querySelector("#sunset").innerHTML = "";
@@ -367,3 +414,22 @@ window.addEventListener("popstate", function () {
         closesearch();
     }
 })
+
+function changetheme() {
+    document.querySelector("body").classList.toggle("light");
+    theme = (theme == "dark") ? "light" : "dark"
+    localStorage.setItem("theme", theme);
+}
+
+function changeunits() {
+    unit = (unit === "metric") ? "imperial" : "metric";
+    localStorage.setItem("unit", unit);
+    last = undefined;
+    lastforecast = undefined;
+    if (!navigator.onLine) {
+        toast("No Internet Connection! Units will be changed when connection restores.");
+    } else {
+        req(city);
+        toast("Changing units....");
+    }
+}
