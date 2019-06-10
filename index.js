@@ -14,14 +14,16 @@ var unit;
 var theme;
 if (localStorage.getItem("theme")) {
     theme = localStorage.getItem("theme");
-    if(theme === "light"){
+    if (theme === "light") {
         document.querySelector("body").className = "light";
     }
+    document.querySelector("#themebtn").innerText = `Switch to ${(theme === "light")?"dark": "light"} mode`
 } else {
     theme = "dark";
 }
 if (localStorage.getItem("unit")) {
     unit = localStorage.getItem("unit");
+    document.querySelector("#unitbtn").innerText = `Switch to ${(unit === "metric")?"imperial": "metric"} units`
 } else {
     unit = "metric"
 }
@@ -144,7 +146,7 @@ function toast(msg) {
                     is_toasting = false;
                 }, 500
             )
-        }, 2500)
+        }, 5000)
     } else {
         setTimeout(function () {
             toast(msg)
@@ -212,7 +214,7 @@ function forecast(fore) {
         maxtemp = Math.max.apply(Math, todaytemp);
         mintemp = Math.min.apply(Math, todaytemp);
         document.querySelector("#minmaxtext").innerText = "Max/Min";
-        document.querySelector("#minmax").innerHTML = parseInt(maxtemp) + `&deg;${(unit === "metric")?"C":"F"}&nbsp;/&nbsp;${parseInt(mintemp)}&deg;${(unit === "metric")?"C":"F"}`;
+        document.querySelector("#minmax").innerHTML = parseInt(maxtemp) + `&deg;${(unit === "metric")?"C":"F"}&nbsp;/&nbsp;${parseInt(mintemp)}&deg;${(unit === "metric")?"C":"F"}&nbsp;&nbsp;<i class="wi wi-thermometer"></i>`;
         var temphtml = "";
         tempdate = new Date(fore.list[0].dt * 1000);
         var basedate = tempdate.getDate();
@@ -417,19 +419,21 @@ window.addEventListener("popstate", function () {
 
 function changetheme() {
     document.querySelector("body").classList.toggle("light");
-    theme = (theme == "dark") ? "light" : "dark"
+    theme = (theme == "dark") ? "light" : "dark";
     localStorage.setItem("theme", theme);
+    document.querySelector("#themebtn").innerText = `Switch to ${(theme == "dark") ? "light" : "dark"} mode`
 }
 
 function changeunits() {
-    unit = (unit === "metric") ? "imperial" : "metric";
-    localStorage.setItem("unit", unit);
-    last = undefined;
-    lastforecast = undefined;
     if (!navigator.onLine) {
         toast("No Internet Connection! Units will be changed when connection restores.");
     } else {
-        req(city);
         toast("Changing units....");
+        unit = (unit === "metric") ? "imperial" : "metric";
+        localStorage.setItem("unit", unit);
+        last = undefined;
+        lastforecast = undefined;
+        document.querySelector("#unitbtn").innerText = `Switch to ${(unit === "metric") ? "imperial" : "metric"} units`
+        req(city);
     }
 }

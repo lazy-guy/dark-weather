@@ -19,7 +19,6 @@ html {
     border-radius: 10px;
     width: 90vw;
     margin: 10px auto 20px auto;
-    padding-top: 20px;
     background-color: rgb(12, 18, 43);
 }
 
@@ -106,6 +105,7 @@ html {
 }
 
 .hours {
+    scroll-snap-align: center;
     height: 100%;
     padding: 0px 40px 0px 40px;
     text-align: center;
@@ -271,7 +271,8 @@ html {
     margin: 0px;
     padding: 0px;
     border-radius: 50%;
-    box-shadow: 0px 2px 8px 2px silver;
+    background-color: rgba(64, 64, 65, 0.705);
+    color: #fff;
 }
 
 .s-kebab-opener {
@@ -285,12 +286,8 @@ html {
     border-radius: 50%;
     font-size: 36px;
     line-height: 54px;
-    background-color: rgba(255, 255, 255, 0.705);
-    color: #000;
-}
-
-.s-kebab-opener:hover {
-    background-color: #fff;
+    background-color: inherit;
+    color: inherit;
 }
 
 .s-kebab-content {
@@ -302,7 +299,7 @@ html {
     color: #fff;
     font-size: 1rem;
     background-color: rgb(85, 83, 83);
-    box-shadow: 1px 0px 10px 0px gray;
+    box-shadow: 1px 0px 10px 0px rgba(0, 0, 0, 0.185);
     right: 0px;
     transform-origin: top right;
 }
@@ -381,7 +378,10 @@ body.light {
 .light #closesearch:hover {
     color: #000;
 }
-
+.light .s-kebab{
+    background-color: rgba(255, 255, 255, 0.705);
+    box-shadow: 0px 2px 8px 2px silver;
+}
 .light .s-kebab-content,
 .light .s-kebab-opener {
     background-color: #fff;
