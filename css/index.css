@@ -6,7 +6,6 @@ html {
     background-color: #121212;
     color: #eeeeee;
     overflow-x: hidden;
-    user-select: none;
     font-size: 20px;
     font-weight: 400;
 }
@@ -95,9 +94,9 @@ html {
     padding: 0px;
     display: flex;
     overflow-x: scroll;
-    scroll-snap-type: x mandatory;
+    overflow-x: overlay;
     -webkit-overflow-scrolling: touch;
-    scrollbar-color: #282828 #666666;
+    scrollbar-color: #666666 #282828;
     scrollbar-width: thin;
 }
 
@@ -107,7 +106,6 @@ html {
 }
 
 .hours {
-    scroll-snap-align: center;
     height: 100%;
     padding: 0px 40px 0px 40px;
     text-align: center;
@@ -173,12 +171,12 @@ html {
 }
 
 .fiveday::-webkit-scrollbar-thumb {
-    background: rgb(39, 38, 38);
+    background: #666666;
     border-radius: 12px;
 }
 
 .fiveday::-webkit-scrollbar-thumb:hover {
-    background: rgb(20, 20, 20);
+    background: #777777;
     border-radius: 12px;
 }
 
@@ -366,6 +364,8 @@ body.light {
 
 .light .fiveday {
     background-color: #fefefe;
+    scrollbar-color: #282828 #ffffff;
+    scrollbar-width: thin;
 }
 
 .light #citylist {
@@ -388,6 +388,20 @@ body.light {
 .light .s-kebab-opener {
     background-color: #fff;
     color: #000;
+}
+
+.light .fiveday::-webkit-scrollbar-track {
+    background: #ffffff;
+}
+
+.light .fiveday::-webkit-scrollbar-thumb {
+    background: #282828;
+    border-radius: 12px;
+}
+
+.fiveday::-webkit-scrollbar-thumb:hover {
+    background: #383838;
+    border-radius: 12px;
 }
 
 @media screen and (min-width:720px) {
