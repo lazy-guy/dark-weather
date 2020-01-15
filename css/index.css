@@ -96,8 +96,7 @@ html {
     overflow-x: scroll;
     overflow-x: overlay;
     -webkit-overflow-scrolling: touch;
-    scrollbar-color: #666666 #282828;
-    scrollbar-width: thin;
+    scrollbar-color: #777777 #282828;
 }
 
 .date {
@@ -171,12 +170,12 @@ html {
 }
 
 .fiveday::-webkit-scrollbar-thumb {
-    background: #666666;
+    background: #777777;
     border-radius: 12px;
 }
 
 .fiveday::-webkit-scrollbar-thumb:hover {
-    background: #777777;
+    background: #666666;
     border-radius: 12px;
 }
 
@@ -365,7 +364,6 @@ body.light {
 .light .fiveday {
     background-color: #fefefe;
     scrollbar-color: #282828 #ffffff;
-    scrollbar-width: thin;
 }
 
 .light #citylist {
@@ -388,6 +386,10 @@ body.light {
 .light .s-kebab-opener {
     background-color: #fff;
     color: #000;
+}
+
+.light li button:hover {
+    background-color: #dddddd;
 }
 
 .light .fiveday::-webkit-scrollbar-track {
