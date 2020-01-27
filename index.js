@@ -419,6 +419,7 @@ window.addEventListener("popstate", function () {
 
 function changetheme() {
     document.querySelector("body").classList.toggle("light");
+    document.querySelector("html").classList.toggle("light");
     theme = (theme == "dark") ? "light" : "dark";
     localStorage.setItem("theme", theme);
     document.querySelector("#themebtn").innerText = `Switch to ${(theme == "dark") ? "light" : "dark"} mode`
