@@ -160,8 +160,25 @@ html {
     font-size: 25px;
 }
 
-.fiveday::-webkit-scrollbar {
+body::-webkit-scrollbar {
     width: 10px;
+}
+
+body::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0);
+}
+
+body::-webkit-scrollbar-thumb {
+    background: #777777;
+    border-radius: 12px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+    background: #666666;
+    border-radius: 12px;
+}
+
+.fiveday::-webkit-scrollbar {
     height: 10px;
 }
 
@@ -390,6 +407,24 @@ body.light {
 
 .light li button:hover {
     background-color: #dddddd;
+}
+
+body.light::-webkit-scrollbar-track {
+    background: #ffffff;
+}
+
+body.light::-webkit-scrollbar-thumb {
+    background: #282828;
+    border-radius: 12px;
+}
+
+body.light::-webkit-scrollbar-thumb:hover {
+    background: #383838;
+    border-radius: 12px;
+}
+
+html.light{
+    scrollbar-color: #282828 #ffffff;
 }
 
 .light .fiveday::-webkit-scrollbar-track {
