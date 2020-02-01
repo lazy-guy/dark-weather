@@ -2,4 +2,4 @@
 
 A simple Weather PWA based on OpenWeatherMap API
 
-[Open Dark Weather](https://simply-js.github.io/dark-weather/)
+[Open Dark Weather](https://lazy-guy.github.io/dark-weather/)
